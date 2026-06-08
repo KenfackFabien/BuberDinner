@@ -1,6 +1,6 @@
-using BuberDinner.Application.Common.Errors;
 using BuberDinner.Application.Services.Authentication;
 using BuberDinner.Contracts.Authentication;
+using BuberDinner.Domain.Common.Errors;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +8,7 @@ namespace BuberDinner.Api.Controllers;
 
 [ApiController]
 [Route("auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -28,9 +28,7 @@ public class AuthenticationController : ControllerBase
 
         return registerResult.Match(
             authResult => Ok(MapAuthResult(authResult)),
-            _ => Problem(
-                statusCode: StatusCodes.Status409Conflict,
-                title: "User already exist."));
+            errors => Problem(errors));
         
     }
 
@@ -50,14 +48,17 @@ public class AuthenticationController : ControllerBase
         var authResult = _authenticationService.Login(
             request.Email,
             request.Password);
-            
-        var response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token);
 
-        return Ok(response);
+        if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
+        {
+            return Problem(
+                statusCode: StatusCodes.Status401Unauthorized,
+                title: authResult.FirstError.Description);
+        }
+        
+        return authResult.Match(
+            authResult => Ok(MapAuthResult(authResult)),
+            errors => Problem(errors)
+        );
     }
 }
