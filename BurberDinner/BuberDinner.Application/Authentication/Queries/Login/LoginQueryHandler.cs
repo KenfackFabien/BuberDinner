@@ -7,16 +7,15 @@ using BuberDinner.Domain.Entities;
 using ErrorOr;
 using MediatR;
 
-
 namespace BuberDinner.Application.Authentication.Queries.Login;
 
-public class LoginCommandHandler :
+public class LoginQueryHandler :
     IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-    public LoginCommandHandler(
+    public LoginQueryHandler(
         IUserRepository userRepository,
         IJwtTokenGenerator jwtTokenGenerator)
     {
@@ -27,6 +26,8 @@ public class LoginCommandHandler :
     public async Task<ErrorOr<AuthenticationResult>> Handle(
         LoginQuery query, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask; 
+
            // 1. Validte the user exists
         if (_userRepository.GetUserByEmail(query.Email) is not User user)
         {
@@ -46,6 +47,5 @@ public class LoginCommandHandler :
             user,
             token
         );
-    }
-   
+    }   
 }
