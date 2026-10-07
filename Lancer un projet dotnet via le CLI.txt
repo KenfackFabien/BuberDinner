@@ -1,0 +1,71 @@
+COMMANDES POUR DEMARRER UN PROJET C# SUR LE CLI
+- dotnet new sln -o ProjectName (pour créer la solution)
+- dotnet new webapi -o ProjectName.Api
+- dotnet new classlib -o ProjectName.Application
+- dotnet new classlib -o ProjectName.Domain
+- dotnet new classlib -o ProjectName.Infrastructure
+- dotnet new classlib -o ProjectName.Contracts 
+- dotnet build
+- more .\ProjectName.sln (voir les projets de la solution, elle est vide)
+- dotnet sln add (ls -r **\*.csproj) (ajouter les projets créés à la solution)
+- dotnet build
+- dotnet add .\ProjectName.Api\ reference .\ProjectName.Contracts\ .\ProjectName.Application\
+- dotnet add .\ProjectName.Infrastructure\ reference .\ProjectName.Appplication\
+- dotnet add .\ProjectName.Application\ reference .\ProjectName.Domain\
+- dotnet add .\ProjectName.Api\ reference .\ProjectName.Infrastructure\
+- dotnet build
+- dotnet run --project .\ProjectName.Api\ (excecuter le projet Api)
+
+-dotnet add .\ProjectName.Domain\ package errorOr
+-dotnet add .\ProjectName.Application\ package mediatR
+
+POUR POUSSER LE PROJET SUR GIT
+- git add . (ajouter toutes les modifiactions)
+- git commit -m "commentaires" 
+- git push
+- git switch -c nom-de-la-nouvelle-branche //pour créer la branche en locale
+- git push --set-upstream origin nom-de-la-nouvelle-branche //pour créer la branche en ligne et pousser le code
+- git branch (voir toutes branches du projet et la branche actuelle est précédé par *)
+- git status (affiche la branche active au dessus et liste les fichiers modifiés et non commités)
+
+
+
+
+
+
+Error Object Properties
+Spécification des membres d'un objet "Problem Details"
+Un objet de détails de problème (Problem Details) peut comporter les membres suivants :
+
+"type" (string) : Une référence URI [RFC3986] qui identifie le type de problème. 
+Cette spécification encourage le fait que, lorsqu'elle est déréférencée, 
+elle fournisse une documentation lisible par l'homme pour le type de problème 
+(par exemple, en utilisant du HTML [W3C.REC-html5-20141028]). Lorsque ce membre 
+n'est pas présent, sa valeur est supposée être "about:blank".
+
+"title" (string) : Un résumé court et lisible par l'homme du type de problème. 
+Il NE DEVRAIT PAS changer d'une occurrence à l'autre du problème, sauf pour 
+des raisons de localisation (par exemple, en utilisant la négociation de contenu 
+proactive ; voir [RFC7231], Section 3.4).
+
+"status" (number) : Le code de statut HTTP ([RFC7231], Section 6) généré par 
+le serveur d'origine pour cette occurrence du problème.
+
+"detail" (string) : Une explication lisible par l'homme spécifique à cette occurrence 
+précise du problème.
+
+"instance" (string) : Une référence URI qui identifie l'occurrence spécifique du problème. 
+Elle peut ou non fournir des informations supplémentaires si elle est déréférencée.
+
+
+{
+  "type": "https://example.com/probs/out-of-credit",
+  "title": "You do not have enough credit.",
+  "detail": "Your current balance is 30, but that costs 50.",
+  "instance": "/account/12345/msgs/abc",
+  "balance": 30,
+  "accounts": [
+    "/account/12345",
+    "/account/67890"
+  ]
+}
