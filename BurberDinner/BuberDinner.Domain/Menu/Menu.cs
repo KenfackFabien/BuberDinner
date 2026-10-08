@@ -17,7 +17,6 @@ public sealed class Menu : AggregateRoot<MenuId>
     public float AverageRating { get; }
 
     public IReadOnlyList<MenuSection> Sections => _sections.AsReadOnly();
-
     public HostId HostId { get; }
     public IReadOnlyList<DinnerId> DinnerIds => _dinnerIds.AsReadOnly();
     public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds.AsReadOnly();

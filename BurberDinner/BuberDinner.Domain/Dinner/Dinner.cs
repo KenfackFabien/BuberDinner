@@ -43,6 +43,7 @@ public sealed class Dinner : AggregateRoot<DinnerId>
         Price price,
         MenuId menuId,
         string imageURL,
+        HostId hostId,
         DateTime createdDateTime,
         DateTime updatedDateTime
     ) : base(dinnerId)
@@ -59,6 +60,7 @@ public sealed class Dinner : AggregateRoot<DinnerId>
         Price = price;
         MenuId = menuId;
         ImageURL = imageURL;
+        HostId = hostId;
         CreatedDateTime = createdDateTime;
         UpdatedDateTime = updatedDateTime;
     }
@@ -75,7 +77,8 @@ public sealed class Dinner : AggregateRoot<DinnerId>
         int maxGuest,
         Price price,
         MenuId menuId,
-        string imageURL
+        string imageURL,
+        HostId hostId
     ) 
     {
         return new
@@ -93,6 +96,7 @@ public sealed class Dinner : AggregateRoot<DinnerId>
             price,
             menuId,
             imageURL,
+            hostId,
             DateTime.UtcNow,
             DateTime.UtcNow);
     }
