@@ -27,6 +27,9 @@ POUR POUSSER LE PROJET SUR GIT
 - git push --set-upstream origin nom-de-la-nouvelle-branche //pour créer la branche en ligne et pousser le code
 - git branch (voir toutes branches du projet et la branche actuelle est précédé par *)
 - git status (affiche la branche active au dessus et liste les fichiers modifiés et non commités)
+- git log (voir tous les commits et appuyer Q pour sortir)
+- git log -n 5 --oneline (les 5 derniers commits forme de ligne)
+
 
 
 
